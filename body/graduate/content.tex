@@ -1,103 +1,160 @@
-\chapter{关于本模板}
+% =============================================================================
+% 第一章 绪论 (预计 8 页)
+% =============================================================================
+\chapter{绪论}
+\label{chap:intro}
 
-本模板根据浙江大学研究生院编写的《浙江大学研究生学位论文编写规则》~\cite{zjugradthesisrules}，
-在原有的 zjuthesis 模板~\cite{zjuthesis}基础上开发而来。
+\section{研究背景与意义}
+% TODO: 1. 宏观背景：AIGC时代三维内容生产的爆发与瓶颈。
+% TODO: 2. 行业痛点：影视制作中导演意图（自然语言）与底层参数（数学数值）的语义鸿沟。
+% TODO: 3. 现有技术局限：Text-to-3D 生成资产不可编辑、自动运镜缺乏语义理解。
+% TODO: 4. 本文研究价值：连接生成式AI与图形学引擎，实现“所见即所得”的工业级控制。
 
-本模板的本科生版本\cite{zjuthesisrules}得到了浙江大学本科生院老师的支持与审核，
-已经在本科生院网上公示。
-但当前的研究生版本并未经过研究生院老师的审核，
-同学们使用时要注意对照模板与要求，
-切不可盲目使用。
+\section{国内外研究现状}
+% TODO: 文献综述，需要引用30-50篇论文。
+\subsection{文本生成三维场景技术}
+% TODO: 评述 NeRF, DreamFusion, Point-E 等生成式方法，指出其在工业管线中“不可编辑、拓扑混乱”的缺陷。
+\subsection{虚拟摄影机控制与自动运镜}
+% TODO: 评述传统的基于优化、基于规则的运镜方法，指出其缺乏“视觉语义”感知的不足。
+\subsection{跨模态生成与视觉语言模型}
+% TODO: 简述 CLIP, Stable Diffusion 在理解视觉语义方面的进展，作为本文的理论基石。
 
-作者本人并未编写过浙江大学研究生毕业论文，
-所以不清楚具体要求。
-如果有热心同学愿意帮忙，
-可以替我联系相关老师，我会配合审核并修改代码。
-
-\section{Overleaf 使用注意事项}
-
-如果你在Overleaf上编译本模板，请注意如下事项：
-
+\section{本文主要研究内容}
+本文提出了一种基于生成式视觉先验的虚拟场景自动构图参数解算方法与系统。主要研究内容如下：
 \begin{itemize}
-    \item 删除根目录的 ``.latexmkrc'' 文件，否则编译失败且不报任何错误
-    \item 字体有版权所以本模板不能附带字体，请务必手动上传字体文件，并在各个专业模板下手动指定字体。
-        具体方法参照 GitHub 主页的说明。
-    \item 当前的Overleaf默认使用TexLive 2017进行编译，但一些伪粗体复制乱码的问题需要TexLive 2019版本来解决。
-        所以各位同学可以在Overleaf上编写论文时务必切换到TexLive 2019或更新版本来编译，以免产生查重相关问题。
-        具体说明参照 GitHub 主页。
+    \item \textbf{跨模态语义交互与视觉先验生成}：构建基于大语言模型（LLM）与文生图模型（SD）的交互框架，将抽象文本转化为具体的二维视觉参考。
+    \item \textbf{基于几何约束与重投影优化的参数逆向解算}：提出一种从二维构图特征到三维摄像机位姿的逆向映射算法，并引入迭代修正机制以最小化重投影误差。
+    \item \textbf{尺度自适应的动态运镜生成}：设计基于包围盒对角线的归一化度量标准，实现从静态单帧到动态轨迹的自适应扩展。
 \end{itemize}
 
+\section{本文组织结构}
+% TODO: 简要介绍各章节安排（本模板已自动生成目录，此处用文字串联即可）。
 
-\section{节标题}
+% =============================================================================
+% 第二章 相关理论与技术基础 (预计 6 页)
+% =============================================================================
+\chapter{相关理论与技术基础}
+\label{chap:background}
 
-我们可以用includegraphics来插入现有的jpg等格式的图片，
-如\autoref{fig:zju-logo}所示。
+\section{虚拟摄影机成像模型}
+\subsection{针孔相机模型}
+% TODO: 给出透视投影矩阵公式，定义世界坐标系、相机坐标系、像素坐标系的转换关系。
+\subsection{三维场景中的空间变换}
+% TODO: 解释欧拉角、四元数、齐次变换矩阵的基础知识。
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=.3\linewidth]{logo/zju}
-    \caption{\label{fig:zju-logo}浙江大学LOGO}
-\end{figure}
+\section{生成式人工智能基础}
+\subsection{扩散模型与文生图技术}
+% TODO: 简述 Latent Diffusion Models (LDM) 原理，重点解释 Prompt 对生成图像的控制作用。
+\subsection{大语言模型与提示词工程}
+% TODO: 简述 LLM 在自然语言理解中的作用，以及 Chain-of-Thought (CoT) 在提示词优化中的应用。
 
+\section{目标检测与特征提取}
+% TODO: 简述 YOLO 系列算法原理，说明如何获取 2D 包围盒 (Bounding Box)。
 
-\subsection{小节标题}
+% =============================================================================
+% 第三章 基于视觉先验的静态构图参数逆向解算 (核心工作一，预计 18 页)
+% =============================================================================
+\chapter{基于视觉先验的静态构图参数逆向解算}
+\label{chap:method_static}
 
+\section{引言}
+% TODO: 阐述本章解决的核心问题：如何把一张 2D 图片精确还原为 3D 摄像机参数。
 
-\par 如\autoref{tab:sample}所示，这是一张自动调节列宽的表格。
+\section{跨模态语义交互框架}
+\subsection{基于LLM的视觉提示词优化}
+% TODO: 详细描述如何将用户输入的“火箭飞行”转化为 SD 能理解的 "cinematic shot, rocket flying..."。
+\subsection{生成式视觉先验获取}
+% TODO: 描述 Stable Diffusion 的调用流程及参数设置。
 
-\begin{table}[htbp]
-    \caption{\label{tab:sample}自动调节列宽的表格}
-    \begin{tabularx}{\linewidth}{c|X<{\centering}}
-        \hline
-        第一列 & 第二列 \\ \hline
-        xxx & xxx \\ \hline
-        xxx & xxx \\ \hline
-        xxx & xxx \\ \hline
-    \end{tabularx}
-\end{table}
+\section{二维构图特征提取与分析}
+% TODO: 描述使用 YOLO 提取包围盒 $(cx, cy, w, h)$ 的过程。
+% TODO: 增加：数据预处理与异常值过滤。
 
-
-\par 如\autoref{equ:sample}，这是一个公式
-
+\section{几何约束下的参数逆向求解算法}
+\subsection{尺度归一化与局部坐标系构建}
+% TODO: 对应专利步骤 S1，解释 AABB 包围盒及对角线 $L_{diag}$ 的计算。
+\subsection{基于视锥体几何的初值估计}
+% TODO: 对应专利步骤 S3，推导距离 $D$ 和 偏移量 $\Delta$ 的解析公式。
 \begin{equation}
-    \label{equ:sample}
-    A=\overbrace{(a+b+c)+\underbrace{i(d+e+f)}_{\text{虚数}}}^{\text{复数}}
+    D = \frac{H_{obj}}{2 \tan(\theta_{obj}/2)}
 \end{equation}
 
-\chapter{另一章}
+\section{基于重投影误差的位姿迭代优化}
+% TODO: 【这是为了增加学术深度的扩展部分】
+\subsection{重投影损失函数定义}
+% TODO: 定义 Loss = IoU_Loss + Center_Distance_Loss。
+\subsection{非线性优化求解策略}
+% TODO: 描述如何通过梯度下降或简单的迭代反馈来微调摄像机参数，解决透视畸变问题。
 
+\section{本章小结}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=.3\linewidth]{example-image-a}
-    \caption{\label{fig:fig-placeholder}图片占位符}
-\end{figure}
+% =============================================================================
+% 第四章 尺度自适应与动态运镜生成 (核心工作二，预计 14 页)
+% =============================================================================
+\chapter{尺度自适应与动态运镜生成}
+\label{chap:method_dynamic}
 
-\chapter{再一章}
+\section{引言}
+% TODO: 阐述问题：静态构图只是起点，动态运镜和多尺度适配才是工业痛点。
 
-\par 如\autoref{alg:sample}，这是一个算法
+\section{尺度自适应机制}
+\subsection{场景尺度度量标准}
+% TODO: 深入讨论为什么用包围盒对角线作为归一化因子是鲁棒的。
+\subsection{运镜模板的参数化映射}
+% TODO: 解释如何将标准模板库（Template Library）映射到不同大小的物体上。
 
-\begin{algorithm}[H]
-    \begin{algorithmic} % enter the algorithmic environment
-        \REQUIRE $n \geq 0 \vee x \neq 0$
-        \ENSURE $y = x^n$
-        \STATE $y \Leftarrow 1$
-        \IF{$n < 0$}
-            \STATE $X \Leftarrow 1 / x$
-            \STATE $N \Leftarrow -n$
-        \ELSE
-            \STATE $X \Leftarrow x$
-            \STATE $N \Leftarrow n$
-        \ENDIF
-        \WHILE{$N \neq 0$}
-            \IF{$N$ is even}
-                \STATE $X \Leftarrow X \times X$
-                \STATE $N \Leftarrow N / 2$
-            \ELSE[$N$ is odd]
-                \STATE $y \Leftarrow y \times X$
-                \STATE $N \Leftarrow N - 1$
-            \ENDIF
-        \ENDWHILE
-    \end{algorithmic}
-    \caption{\label{alg:sample}算法样例}
-\end{algorithm}
+\section{语义驱动的轨迹重定向}
+\subsection{运镜语义特征匹配}
+% TODO: 如何通过 LLM 分析指令中的动词（如“环绕”、“推进”），并检索对应的模板。
+\subsection{关键帧插值与平滑处理}
+% TODO: 描述在 UE5 中生成 Level Sequence 的过程，以及如何保证曲线平滑。
+
+\section{实验与结果分析}
+% TODO: 这里可以放针对动态效果的对比实验。
+\subsection{多尺度适配性测试}
+\subsection{动态轨迹平滑度分析}
+
+\section{本章小结}
+
+% =============================================================================
+% 第五章 系统设计与实现 (预计 12 页)
+% =============================================================================
+\chapter{系统设计与实现}
+\label{chap:system}
+
+\section{需求分析}
+% TODO: 功能需求（语义理解、参数解算、预览复现）与非功能需求（响应速度、易用性）。
+
+\section{系统架构设计}
+\subsection{总体架构}
+% TODO: 绘制系统架构图（前端 UE5 Widget <-> 后端 Python Server <-> AI Models）。
+\subsection{模块划分}
+% TODO: 详细介绍 场景感知模块、跨模态交互模块、参数解算模块。
+
+\section{关键功能模块实现}
+\subsection{UE5 与外部 AI 服务的通信接口}
+% TODO: 贴关键代码（Socket/HTTP 通信）。
+\subsection{自动化管线集成}
+% TODO: 描述 TAPython 脚本如何控制 CineCameraActor。
+
+\section{系统测试与评估}
+\subsection{功能测试}
+\subsection{性能评估}
+% TODO: 分析系统生成一次镜头的耗时（分解为 AI 生成时间 + 解算时间）。
+
+\section{本章小结}
+
+% =============================================================================
+% 第六章 总结与展望 (预计 4 页)
+% =============================================================================
+\chapter{总结与展望}
+\label{chap:concl}
+
+\section{全文总结}
+% TODO: 概括本文解决的问题、提出的方法以及取得的成果。
+
+\section{研究局限}
+% TODO: 诚实地列出不足（例如：目前仅支持单主体、极度夸张的透视生成可能失败）。
+
+\section{未来工作展望}
+% TODO: 多物体构图、光照与风格迁移的同步控制等。
