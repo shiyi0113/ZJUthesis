@@ -98,20 +98,89 @@ Jiang 等人 \cite{jiang2020example} 提出了一种范例驱动（Example-drive
 \chapter{相关理论与技术基础}
 \label{chap:background}
 
-\section{虚拟摄影机成像模型}
-\subsection{针孔相机模型}
-% TODO: 给出透视投影矩阵公式，定义世界坐标系、相机坐标系、像素坐标系的转换关系。
-\subsection{三维场景中的空间变换}
-% TODO: 解释欧拉角、四元数、齐次变换矩阵的基础知识。
-\cite{zjuthesisrules}
-\section{生成式人工智能基础}
-\subsection{扩散模型与文生图技术}
-% TODO: 简述 Latent Diffusion Models (LDM) 原理，重点解释 Prompt 对生成图像的控制作用。
-\subsection{大语言模型与提示词工程}
-% TODO: 简述 LLM 在自然语言理解中的作用，以及 Chain-of-Thought (CoT) 在提示词优化中的应用。
+本章主要介绍支撑本文研究的核心理论与技术框架。首先阐述针孔摄像机模型及其坐标系变换原理，为后续的参数逆向求解奠定几何基础；其次介绍生成式人工智能中的潜在扩散模型（Latent Diffusion Models）及其可控生成机制；最后概述 Unreal Engine 5 引擎在虚拟制片中的应用及其底层架构。
 
-\section{目标检测与特征提取}
-% TODO: 简述 YOLO 系列算法原理，说明如何获取 2D 包围盒 (Bounding Box)。
+\section{针孔摄像机模型与几何变换}
+
+针孔摄像机模型（Pinhole Camera Model）是计算机图形学与计算机视觉中最基础的成像模型\cite{hartley2003multiple}。该模型描述了三维世界坐标系中的点如何通过透视投影映射到二维图像坐标系中。
+
+\subsection{四大坐标系定义}
+为了精确描述成像过程，通常需要定义以下四个坐标系及其转换关系：
+\begin{itemize}
+    \item \textbf{世界坐标系 (World Coordinate System, $O_w$)}：描述物体在三维空间中绝对位置的基准坐标系，通常记为 $(X_w, Y_w, Z_w)$。
+    \item \textbf{摄像机坐标系 (Camera Coordinate System, $O_c$)}：以摄像机光心为原点，光轴方向为 $Z_c$ 轴建立的坐标系，记为 $(X_c, Y_c, Z_c)$。
+    \item \textbf{图像物理坐标系 (Image Plane Coordinate System, $O_{xy}$)}：位于摄像机前方焦距 $f$ 处的成像平面，单位通常为毫米，记为 $(x, y)$。
+    \item \textbf{像素坐标系 (Pixel Coordinate System, $O_{uv}$)}：以图像左上角为原点，描述像素行列号的离散坐标系，单位为像素 (pixel)，记为 $(u, v)$。
+\end{itemize}
+
+\subsection{成像投影方程}
+三维空间中的一点 $P_w = [X_w, Y_w, Z_w]^T$ 映射到像素坐标 $p = [u, v]^T$ 的过程可以表示为一系列矩阵的乘积。
+
+首先，从世界坐标系到摄像机坐标系的变换属于刚体变换（Rigid Body Transformation），由旋转矩阵 $R$ 和平移向量 $t$ 决定：
+\begin{equation}
+    \begin{bmatrix} X_c \\ Y_c \\ Z_c \end{bmatrix} = R \begin{bmatrix} X_w \\ Y_w \\ Z_w \end{bmatrix} + t
+\end{equation}
+
+其次，根据相似三角形原理，从摄像机坐标系投影到图像物理坐标系的关系为：
+\begin{equation}
+    x = f \frac{X_c}{Z_c}, \quad y = f \frac{Y_c}{Z_c}
+\end{equation}
+
+最后，结合像素平移 $(c_x, c_y)$ 和物理尺寸转换因子 $(d_x, d_y)$，可以将整个成像过程统一表示为齐次坐标下的矩阵形式：
+\begin{equation}
+    Z_c \begin{bmatrix} u \\ v \\ 1 \end{bmatrix} = 
+    \underbrace{
+    \begin{bmatrix} 
+        f_x & 0 & c_x \\ 
+        0 & f_y & c_y \\ 
+        0 & 0 & 1 
+    \end{bmatrix}
+    }_{\text{内参矩阵 } K}
+    \underbrace{
+    \begin{bmatrix} 
+        R & t 
+    \end{bmatrix}
+    }_{\text{外参矩阵 } [R|t]}
+    \begin{bmatrix} X_w \\ Y_w \\ Z_w \\ 1 \end{bmatrix}
+\end{equation}
+
+其中，$K$ 为摄像机内参矩阵（Intrinsic Matrix），包含焦距 $f_x, f_y$ 和主点坐标 $c_x, c_y$；$[R|t]$ 为外参矩阵（Extrinsic Matrix），描述了摄像机在世界坐标系中的位姿。本文第四章提出的“逆向投影算法”，本质上就是已知 $u, v$ 和 $K$，在引入几何约束的情况下反求 $R$ 和 $t$ 的过程\cite{szeliski2022computer}。
+
+\section{生成式人工智能与扩散模型}
+
+随着深度学习的发展，基于扩散概率模型（Diffusion Probabilistic Models）的生成式 AI 已成为图像生成领域的主流技术。
+
+\subsection{潜在扩散模型 (Latent Diffusion Models)}
+传统的扩散模型直接在像素空间（Pixel Space）进行操作，计算开销巨大。Rombach 等人提出的潜在扩散模型（LDM）引入了感知压缩技术，将图像压缩到低维的潜在空间（Latent Space）中进行前向加噪和反向去噪过程。
+
+LDM 的训练目标是最小化以下损失函数：
+\begin{equation}
+    L_{LDM} = \mathbb{E}_{z, \epsilon, t} \left[ \| \epsilon - \epsilon_\theta(z_t, t, \tau_\theta(y)) \|_2^2 \right]
+\end{equation}
+其中，$\epsilon$ 为加入的高斯噪声，$\epsilon_\theta$ 为去噪网络（通常为 U-Net），$z_t$ 为 $t$ 时刻的噪声潜变量，$\tau_\theta(y)$ 为条件编码器（如 CLIP Text Encoder\cite{radford2021learning}），用于注入文本语义条件。这一机制使得 LDM 能够根据文本提示词（Prompt）生成语义对齐的高质量图像。
+
+\subsection{可控生成机制 (ControlNet)}
+虽然 LDM 具备强大的生成能力，但仅靠文本难以精确控制生成图像的几何结构。ControlNet \cite{zhang2023adding} 通过锁定预训练的大模型参数，并创建一个可训练的副本层，实现了额外的空间条件控制。
+在本文中，ControlNet 被用于增强文生图过程的结构约束，例如利用 Canny 边缘或 Depth 深度图作为条件，确保生成的参考图像具备合理的透视关系，从而提高后续参数解算的鲁棒性。
+
+\section{三维渲染引擎与虚拟制片}
+
+Unreal Engine 5 (UE5) 是 Epic Games 开发的实时 3D 创作工具，其在虚拟制片（Virtual Production）领域有着广泛应用\cite{gregory2018game}。
+
+\subsection{UE5 坐标系统}
+与计算机视觉中常用的右手坐标系不同，UE5 采用左手坐标系（Left-handed Coordinate System）：
+\begin{itemize}
+    \item \textbf{X轴}：前后方向（Forward），正方向向前。
+    \item \textbf{Y轴}：左右方向（Right），正方向向右。
+    \item \textbf{Z轴}：上下方向（Up），正方向向上。
+\end{itemize}
+在进行算法移植时，必须进行坐标系的转换与对齐。例如，从 OpenCV 的右手系 $(X_{cv}, Y_{cv}, Z_{cv})$ 转换到 UE5 的左手系 $(X_{ue}, Y_{ue}, Z_{ue})$ 通常需要执行轴翻转操作。
+
+\subsection{CineCameraActor 组件}
+UE5 内置的 \texttt{CineCameraActor} 是模拟真实电影摄影机的核心组件。它支持调节焦距（Focal Length）、光圈（Aperture）、传感器尺寸（Sensor Width/Height）等物理参数。本文提出的算法最终将解算出的位姿数据映射为 \texttt{CineCameraActor} 的 \texttt{SetActorLocation} 和 \texttt{SetActorRotation} 接口调用，从而驱动虚拟摄像机运动。
+
+\section{本章小结}
+本章系统介绍了针孔摄像机成像几何、潜在扩散模型原理以及 UE5 引擎架构。成像几何模型为从二维图像反推三维参数提供了理论依据；扩散模型与 ControlNet 为跨模态参考图像的生成提供了技术支撑；UE5 引擎则构成了算法验证的工程载体。这些理论与技术共同构成了本文研究的坚实基础。
 
 % =============================================================================
 % 第三章 基于视觉先验的静态构图参数逆向解算 (核心工作一，预计 18 页)
