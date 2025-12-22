@@ -5,59 +5,53 @@
 \label{chap:intro}
 
 \section{研究背景与意义}
-近年来，随着元宇宙、数字孪生以及3A游戏（如Unreal Engine 5驱动的影视级游戏）的兴起，各行各业对高质量三维（3D）数字内容的需求呈现爆发式增长。传统的三维生产流程往往成本高昂且周期漫长，而生成式人工智能（Artificial Intelligence Generated Content, AIGC）技术的突破为这一困境带来了新的解决思路。特别是随着文生图（Text-to-Image）和文生三维（Text-to-3D）算法的成熟，创作者希望能够通过简单的自然语言指令，直接指挥计算机生成复杂的场景与镜头。这使得“智能化内容生产”成为当前计算机图形学与人工智能交叉领域的研究热点。
 
-然而，在当前的三维内容生产管线中，“虚拟运镜控制”依然是一个极具挑战性的技术瓶颈。这本质上是一个典型的“语义鸿沟”问题：艺术家和导演习惯使用抽象的感性语言（例如“具有压迫感的仰视”、“黄金分割构图”）来描述镜头意图；而三维渲染引擎（如Unity, Unreal Engine）的摄像机系统则依赖于底层的、精确的工程参数（如世界坐标位置、欧拉角旋转、视场角FOV等）。这种“感性视觉思维”与“理性数值逻辑”的不匹配，导致创作者往往需要陷入漫长的“试错循环”，通过手动反复调整参数来逼近预期的构图效果，严重制约了创作效率。
+近年来，随着元宇宙、数字孪生以及 3A 游戏（如 Unreal Engine 5 驱动的影视级游戏）的兴起，各行各业对高质量三维（3D）数字内容的需求呈现爆发式增长。传统的生产流程往往成本高昂且周期漫长，而\textbf{生成式人工智能（Artificial Intelligence Generated Content, AIGC）}技术的突破为这一困境带来了新的解决思路。特别是随着文生图（Text-to-Image）和文生三维（Text-to-3D）算法的成熟，创作者希望能够通过简单的自然语言指令，直接指挥计算机生成复杂的场景与镜头。这使得“智能化内容生产”成为当前计算机图形学与人工智能交叉领域的研究热点。
 
-针对这一问题，现有的解决方案主要分为两类，但均存在显著局限性：第一类是基于规则的辅助工具。这类方法通常预设了一些标准的运镜模板（如环绕、推拉），虽然保证了参数的精确性，但缺乏语义理解能力，无法灵活响应复杂的、个性化的自然语言指令。第二类是新兴的端到端AIGC技术。例如 DreamFusion 等文生三维（Text-to-3D）模型，虽然能直接生成三维物体，但其生成的几何拓扑往往杂乱无章，难以被标准的工业化管线所兼容和二次编辑。此外，现有的文生图模型（如Stable Diffusion）虽然能生成极具艺术感的二维图像，但缺乏空间深度信息，无法直接驱动三维场景中的摄像机。
+然而，在当前的三维内容生产管线中，\textbf{“虚拟运镜控制”}（Virtual Camera Control）依然是一个极具挑战性的技术瓶颈。这本质上是一个典型的\textbf{“语义鸿沟”}（Semantic Gap）问题：艺术家和导演习惯使用抽象的感性语言（例如“具有压迫感的仰视”、“黄金分割构图”）来描述镜头意图；而三维渲染引擎（如 Unity, Unreal Engine）的摄像机系统则依赖于底层的、精确的工程参数（如世界坐标位置、欧拉角旋转、视场角 FOV 等）。这种“感性视觉思维”与“理性数值逻辑”的不匹配，导致创作者往往需要陷入漫长的“试错循环”，通过手动反复调整参数来逼近预期的构图效果，严重制约了创作效率。
 
-鉴于此，本文提出了一种“基于AIGC分镜头引导的虚拟摄像机参数逆向求解方法”。 本研究的核心思路是“以图生参”：利用成熟的文生图大模型作为中间语义层，先将抽象的自然语言转化为直观的二维参考图像；随后，通过本文提出的几何逆向投影算法，从二维图像中提取构图特征，精确解算出三维场景中的摄像机位姿参数。该方法不仅有效消除了语义鸿沟，实现了“所见即所得”的自动化运镜，还具备针对不同尺度物体（从微观昆虫到宏观航天器）的尺度自适应能力，具有重要的理论意义与工程应用价值。
+针对这一问题，现有的解决方案主要分为两类，但均存在显著局限性：
+第一类是\textbf{基于规则的辅助工具}。这类方法通常预设了一些标准的运镜模板（如环绕、推拉），虽然保证了参数的精确性，但缺乏语义理解能力，无法灵活响应复杂的、个性化的自然语言指令。
+第二类是新兴的\textbf{端到端 AIGC 技术}。例如 DreamFusion 等文生三维模型，虽然能直接生成三维物体，但其生成的几何拓扑往往杂乱无章，难以被标准的工业化管线所兼容和二次编辑。此外，现有的文生图模型虽然能生成极具艺术感的二维图像，但缺乏空间深度信息，无法直接驱动三维场景中的摄像机。
+
+鉴于此，本文提出了一种\textbf{“基于 AIGC 分镜头引导的虚拟摄像机参数逆向求解方法”}。本研究的核心思路是\textbf{“以图生参”}：创新性地利用成熟的文生图大模型作为\textbf{“中间语义层”}，先将抽象的自然语言转化为直观的二维参考图像；随后，通过本文提出的\textbf{几何逆向投影算法}，从二维图像中提取构图特征，精确解算出三维场景中的摄像机位姿参数。该方法不仅有效消除了语义鸿沟，实现了“所见即所得”的自动化运镜，还具备针对不同尺度物体（从微观昆虫到宏观航天器）的\textbf{尺度自适应能力}，具有重要的理论意义与工程应用价值。
 
 \section{国内外研究现状}
-% TODO: 文献综述，需要引用30-50篇论文。
+
 \subsection{虚拟运镜控制技术研究现状}
 
-虚拟摄像机控制（Virtual Camera Control）是计算机图形学中的经典问题，旨在计算满足特定构图需求和时空约束的摄像机参数。根据核心算法的不同，现有的研究工作主要可以分为三类：基于规则与几何约束的方法、基于搜索与优化的方法、以及基于数据驱动与智能学习的方法。
+虚拟摄像机控制（Virtual Camera Control）作为连接三维场景与二维画面的桥梁，一直是计算机图形学领域的核心议题。经过三十余年的发展，相关研究已从早期的手动关键帧插值，演变为如今涵盖几何约束求解、路径规划优化、计算美学评价及智能学习决策的多元化技术体系。
 
-\subsubsection{基于规则与几何约束的方法}
-这一类方法主要致力于将电影摄影中的经验法则转化为计算机可执行的几何规则。早期的经典工作如“虚拟摄影师”（The Virtual Cinematographer）系统 \cite{he1996virtual}，引入了分层有限状态机（Hierarchical Finite State Machines）来编码电影习语（Film Idioms），实现了对话场景的自动运镜切换。Christie 等人 \cite{christie2008camera} 进一步提出了基于语义的相机控制框架，通过定义“三分法构图”、“过肩镜头”等几何约束模板，将运镜问题转化为约束满足问题（Constraint Satisfaction Problem, CSP）。
+\subsubsection{基于约束满足与规则的相机控制}
+早期的自动化运镜研究主要致力于将电影摄影中的美学法则转化为数学上的几何约束。Gleicher 等人 \cite{gleicher1992through} 最早提出了“透过镜头”（Through-the-Lens）的控制范式，允许用户直接在屏幕空间操纵物体的位置来反推相机参数。随后，Bares 等人 \cite{bares1999constraint} 开发了基于约束的相机规划器，能够处理包括构图、遮挡和视角在内的多重约束冲突。
+Christie 等人 \cite{christie2008camera} 对此类方法进行了系统性总结，并提出了基于“镜头习语”（Cinematographic Idioms）的语义框架 \cite{olivier2009interactive}。该框架通过预定义如“过肩镜头”、“三分法构图”等模板，将运镜问题转化为约束满足问题（CSP）。
+为了量化构图质量，Liu 等人 \cite{liu2010optimizing} 和 Dunkel 等人 \cite{dunkel2017image} 引入了基于显著性图（Saliency Map）和视觉平衡（Visual Balance）的计算美学指标，为自动化构图提供了数学评价标准。
+尽管此类方法保证了构图的精确性，但其高度依赖专家构建的规则库，面对复杂动态场景时往往缺乏灵活性。
 
-此类方法的优势在于结果的可预测性强，能够严格遵守预设的构图美学。然而，其局限性也十分明显：规则库的构建极其依赖专家知识，且难以穷举所有可能的场景配置。一旦遇到规则库之外的复杂动态场景，系统往往会因为约束冲突而失效。此外，这种基于模板的方式导致生成的运镜风格单一，缺乏艺术表现力。
+\subsubsection{基于搜索与优化的路径规划}
+为了解决规则系统的僵化问题，基于优化的方法将运镜视为高维空间中的代价最小化问题。Li 等人 \cite{li2008real} 提出了一种实时相机规划算法，通过构建可见性图（Visibility Graph）来确保相机在漫游过程中始终避开障碍物。
+Oskam 等人 \cite{oskam2009visibility} 针对动态场景设计了可见性转换规划器，利用随机采样策略在保证主体可见的同时实现平滑的视角切换。Lino 等人 \cite{lino2015intuitive} 则引入了“环面空间”（Toric Space）这一流形结构，将双主体构图问题从六维搜索空间降维至二维流形，极大地提升了求解效率。
+Galvane 等人 \cite{galvane2015automated} 进一步提出了用于交互式叙事的自动化电影摄影系统，能够根据剧情紧张度动态调整相机节奏。
 
-\subsubsection{基于搜索与优化的方法}
-为了突破规则库的限制，研究者们开始将运镜问题建模为高维空间中的数学优化问题。这类方法的核心思想是定义一个包含多种美学指标（如可见性、构图平衡、路径平滑度）的代价函数（Cost Function），通过求解最优解来确定摄像机参数。
+\subsubsection{基于智能学习的运镜决策}
+近年来，深度强化学习（Deep Reinforcement Learning, DRL）为解决复杂的运镜决策提供了新思路。Chen 等人 \cite{chen2016learning} 训练了一个智能体来模仿专业摄影师的构图选择。Bonatti 等人 \cite{bonatti2020autonomous} 和 N{\"a}geli 等人 \cite{nageli2017real} 提出了一种用于无人机航拍的自主运镜系统，利用强化学习在实时飞行中平衡构图美学与避障安全。Huang 等人 \cite{huang2019throughput} 则探索了利用 DRL 进行“透过镜头”式的交互控制。
+虽然学习型方法在风格迁移和动态适应方面表现优异，但其“黑盒”特性导致用户难以通过明确的语义指令（如“稍微往左一点”）来微调结果，可控性（Controllability）仍然是一个未解难题。
 
-Lino 等人 \cite{lino2015intuitive} 提出的“环面空间”（Toric Space）是该领域的里程碑式工作。他们通过流形投影技术，将复杂的摄像机六自由度搜索空间压缩为二维的环面流形，极大地提高了求解两个目标物体构图问题的效率。Jiang 等人 \cite{jiang2020automatic} 则针对复杂遮挡环境下的路径规划问题，提出了一种基于可见性分析的自动优化算法，能够在保证主体持续可见的前提下生成平滑的运镜轨迹。
-
-然而，基于优化的方法通常计算开销巨大（Computationally Expensive），难以满足实时交互（Real-time Interaction）的需求。且由于非凸优化问题容易陷入局部最优，用户往往需要反复调整权重参数才能得到满意的结果。
-
-\subsubsection{基于数据驱动与智能学习的方法}
-近年来，随着深度学习（Deep Learning）与强化学习（Reinforcement Learning）的兴起，基于数据驱动的相机控制成为新的研究热点。与传统方法不同，这类方法试图让智能体（Agent）通过观察大量电影片段或在虚拟环境中试错来自主学习运镜策略。
-
-Jiang 等人 \cite{jiang2020example} 提出了一种范例驱动（Example-driven）的虚拟摄影系统，利用深度神经网络提取参考视频片段中的运镜风格，并将其迁移到新的三维动画中。此外，最新的综述 \cite{courant2025camera} 指出，利用深度强化学习（DRL）训练自主无人机或虚拟相机在动态环境中进行拍摄已取得显著进展。
-
-尽管如此，现有的学习型方法往往面临“黑盒”问题：用户很难通过明确的指令（如自然语言）来精确修正模型的输出结果。这导致了虽有风格但难以精准控制（Uncontrollable）的尴尬局面。
 \subsection{AIGC驱动的三维内容生成研究现状}
 
-生成式人工智能（AIGC）的飞速发展彻底改变了数字内容的生产方式。从最初的文本生成图像，到如今的文本生成三维模型，AIGC技术正在逐步重构计算机图形学的底层逻辑。
+生成式人工智能（AIGC）的爆发经历了从判别式模型到生成式模型的范式转移。从早期的生成对抗网络（GANs）到如今的扩散模型（Diffusion Models）与神经辐射场（NeRF），AI 在三维内容生产中的角色正从“辅助工具”转变为“核心创作者”。
 
-\subsubsection{文本生成二维图像技术}
-文本生成图像（Text-to-Image, T2I）技术旨在将自然语言描述转化为高质量的二维图像。早期的生成对抗网络（GANs）虽然在特定领域表现优异，但难以处理开放域的复杂文本输入。
+\subsubsection{从GANs到扩散模型的二维图像生成}
+在扩散模型统治该领域之前，生成对抗网络（GANs）\cite{goodfellow2014generative} 是图像生成的主流架构。Kingma 等人 \cite{kingma2013auto} 提出的变分自编码器（VAE）与 Karras 等人 \cite{karras2019style} 提出的 StyleGAN 系列，在人脸生成等特定领域达到了极高的逼真度。然而，GANs 普遍存在训练不稳定和模式坍塌（Mode Collapse）的问题。
+2020年以来，Ho 等人 \cite{ho2020denoising} 提出的去噪扩散概率模型（DDPM）和 Song 等人 \cite{song2021denoising} 提出的 DDIM 奠定了现代生成模型的基础。随后，Rombach 等人 \cite{rombach2022high} 提出的潜在扩散模型（LDM/Stable Diffusion）结合 CLIP \cite{radford2021learning} 实现了文本驱动的高质量图像生成。
+为了提升生成的可控性，Zhang 等人 \cite{zhang2023adding} 提出的 ControlNet，Mou 等人 \cite{mou2024t2i} 提出的 T2I-Adapter，以及 Li 等人 \cite{li2023gligen} 提出的 GLIGEN，使得用户可以通过边缘图、骨架、布局框等几何条件精确控制生成结果。Ye 等人 \cite{ye2023ip} 提出的 IP-Adapter 更是实现了基于参考图的风格与内容迁移。尽管如此，上述工作主要聚焦于二维像素平面的生成，缺乏三维空间的一致性。
 
-近年来，基于扩散模型（Diffusion Models）的方法取得了突破性进展。Rombach 等人 \cite{rombach2022high} 提出的潜在扩散模型（Latent Diffusion Models, LDM），即广为人知的 Stable Diffusion，通过在低维潜在空间进行去噪过程，实现了高分辨率图像的快速生成。为了提升生成的可控性，Zhang 等人 \cite{zhang2023adding} 提出了 ControlNet，通过引入额外的空间条件（如边缘图、深度图、骨架图）来引导扩散过程，使得用户能够精确控制生成图像的结构布局。
-
-尽管 T2I 技术已经能够生成极具艺术感和构图美学的图像，但其本质上仍是对**二维像素分布**的建模。生成的图像缺乏内在的三维几何信息（如深度、法向），因此无法直接作为三维场景中的资产进行物理交互或多视角渲染。这也正是本研究引入“逆向投影”算法的动机所在：我们需要将 T2I 模型生成的二维美学“升维”到三维空间。
-
-\subsubsection{文本生成三维内容技术}
-为了解决二维生成的局限性，研究者们开始探索直接从文本生成三维内容（Text-to-3D）。该领域的开创性工作是 Google 提出的 DreamFusion \cite{poole2023dreamfusion}。该方法提出了一种分数蒸馏采样（Score Distillation Sampling, SDS）损失函数，利用预训练的 2D 扩散模型作为先验，去优化一个神经辐射场（NeRF），从而“凭空”捏造出一个符合文本描述的三维物体。随后，Lin 等人 \cite{lin2023magic3d} 提出的 Magic3D 引入了由粗到精（Coarse-to-Fine）的优化策略，显著提升了生成模型的分辨率和几何质量。
-
-然而，现有的 Text-to-3D 技术在工业应用中面临两大挑战：
-\begin{itemize}
-    \item \textbf{几何拓扑不可控}：基于 NeRF 或隐式场生成的方法，其导出的网格模型（Mesh）往往布线混乱，难以进行UV展开、绑定骨骼或二次编辑，无法融入标准的动画制作管线。
-    \item \textbf{场景级控制缺失}：目前的主流算法多局限于生成单个孤立物体（Object-level），对于包含多个物体、复杂空间关系的场景级（Scene-level）生成与运镜控制，尚缺乏成熟的解决方案。
-\end{itemize}
-
-因此，如何在保留标准三维资产工业规范（即使用人工制作的高质量模型）的前提下，利用 AIGC 的语义理解能力来驱动场景布局与相机运动，成为了一个极具价值的研究方向。
+\subsubsection{文本驱动的三维场景生成}
+为了将 AIGC 拓展至三维空间，Mildenhall 等人 \cite{mildenhall2021nerf} 提出的神经辐射场（NeRF）为三维表示提供了新的微分可渲染形式。Google 的 DreamFusion \cite{poole2023dreamfusion} 开创性地提出了分数蒸馏采样（SDS），利用预训练的 2D 扩散模型指导 NeRF 的优化，实现了 Text-to-3D 的突破。
+此后，Magic3D \cite{lin2023magic3d}、Fantasia3D \cite{chen2023fantasia3d} 以及 ProlificDreamer \cite{wang2023prolificdreamer} 等工作不断提升了生成的几何细节与纹理质量。
+针对单图生成三维（Image-to-3D）任务，Liu 等人 \cite{liu2023zero} 提出的 Zero-1-to-3 利用视角条件扩散模型实现了零样本的新视角合成；OpenAI 的 Point-E \cite{nichol2022point} 和 Shap-E \cite{jun2023shap} 则探索了基于点云和隐式函数的快速生成路线。Shi 等人 \cite{shi2023mvdream} 提出的 MVDream 通过多视角一致性优化解决了几何畸变问题。
+值得注意的是，Kerbl 等人 \cite{kerbl20233d} 于2023年提出的 3D Gaussian Splatting 技术，以其高保真和实时渲染特性，正在逐步取代 NeRF 成为新一代的三维表达标准。
+然而，无论是基于 NeRF 还是 Gaussian Splatting 的生成方法，目前仍主要局限于\textbf{单个物体}的生成。对于包含复杂空间关系、需要精确运镜调度的\textbf{场景级}（Scene-level）生成任务，现有的端到端模型仍显得力不从心。这正是本文提出“基于分镜头引导”策略的切入点。
 
 \section{本文主要研究内容}
 
@@ -92,6 +86,7 @@ Jiang 等人 \cite{jiang2020example} 提出了一种范例驱动（Example-drive
 \textbf{第五章 系统实现与实验分析}：介绍了基于 UE5 的原型系统架构与关键模块实现。设计了多组对比实验，从构图还原度、尺度适应性及用户满意度等维度，对本文提出的方法进行了定性展示与定量评估，验证了方法的有效性。
 
 \textbf{第六章 总结与展望}：总结全文的研究工作与主要结论，客观分析了当前方法存在的局限性，并对未来的研究方向（如支持动态视频生成、多机位协同调度等）进行了展望。
+
 % =============================================================================
 % 第二章 相关理论与技术基础 (预计 6 页)
 % =============================================================================
@@ -102,7 +97,7 @@ Jiang 等人 \cite{jiang2020example} 提出了一种范例驱动（Example-drive
 
 \section{针孔摄像机模型与几何变换}
 
-针孔摄像机模型（Pinhole Camera Model）是计算机图形学与计算机视觉中最基础的成像模型\cite{hartley2003multiple}。该模型描述了三维世界坐标系中的点如何通过透视投影映射到二维图像坐标系中。
+针孔摄像机模型（Pinhole Camera Model）是计算机图形学与计算机视觉中最基础的成像模型 \cite{hartley2003multiple, szeliski2022computer}。该模型描述了三维世界坐标系中的点如何通过透视投影映射到二维图像坐标系中。
 
 \subsection{四大坐标系定义}
 为了精确描述成像过程，通常需要定义以下四个坐标系及其转换关系：
@@ -144,40 +139,47 @@ Jiang 等人 \cite{jiang2020example} 提出了一种范例驱动（Example-drive
     \begin{bmatrix} X_w \\ Y_w \\ Z_w \\ 1 \end{bmatrix}
 \end{equation}
 
-其中，$K$ 为摄像机内参矩阵（Intrinsic Matrix），包含焦距 $f_x, f_y$ 和主点坐标 $c_x, c_y$；$[R|t]$ 为外参矩阵（Extrinsic Matrix），描述了摄像机在世界坐标系中的位姿。本文第四章提出的“逆向投影算法”，本质上就是已知 $u, v$ 和 $K$，在引入几何约束的情况下反求 $R$ 和 $t$ 的过程\cite{szeliski2022computer}。
+其中，$K$ 为摄像机内参矩阵（Intrinsic Matrix），包含焦距 $f_x, f_y$ 和主点坐标 $c_x, c_y$；$[R|t]$ 为外参矩阵（Extrinsic Matrix），描述了摄像机在世界坐标系中的位姿。本文第四章提出的“逆向投影算法”，本质上就是已知 $u, v$ 和 $K$，在引入几何约束的情况下反求 $R$ 和 $t$ 的过程。
 
 \section{生成式人工智能与扩散模型}
 
 随着深度学习的发展，基于扩散概率模型（Diffusion Probabilistic Models）的生成式 AI 已成为图像生成领域的主流技术。
 
 \subsection{潜在扩散模型 (Latent Diffusion Models)}
-传统的扩散模型直接在像素空间（Pixel Space）进行操作，计算开销巨大。Rombach 等人提出的潜在扩散模型（LDM）引入了感知压缩技术，将图像压缩到低维的潜在空间（Latent Space）中进行前向加噪和反向去噪过程。
+扩散模型的本质是学习一个可逆的去噪过程。Ho 等人 \cite{ho2020denoising} 提出的去噪扩散概率模型（DDPM）包含前向加噪和反向去噪两个阶段。由于直接在像素空间计算开销巨大，Rombach 等人 \cite{rombach2022high} 提出了潜在扩散模型（LDM），引入感知压缩技术将图像映射到低维潜在空间（Latent Space）。
 
-LDM 的训练目标是最小化以下损失函数：
+LDM 的训练目标是最小化噪声预测误差：
 \begin{equation}
     L_{LDM} = \mathbb{E}_{z, \epsilon, t} \left[ \| \epsilon - \epsilon_\theta(z_t, t, \tau_\theta(y)) \|_2^2 \right]
 \end{equation}
-其中，$\epsilon$ 为加入的高斯噪声，$\epsilon_\theta$ 为去噪网络（通常为 U-Net），$z_t$ 为 $t$ 时刻的噪声潜变量，$\tau_\theta(y)$ 为条件编码器（如 CLIP Text Encoder\cite{radford2021learning}），用于注入文本语义条件。这一机制使得 LDM 能够根据文本提示词（Prompt）生成语义对齐的高质量图像。
+其中，$\epsilon$ 为加入的高斯噪声，$\epsilon_\theta$ 为去噪网络（通常为 U-Net 架构），$z_t$ 为 $t$ 时刻的噪声潜变量，$\tau_\theta(y)$ 为条件编码器（如 CLIP Text Encoder \cite{radford2021learning}）。通过交叉注意力机制（Cross-Attention），$\tau_\theta(y)$ 将文本语义注入 U-Net 的每一层，从而实现文本对生成内容的语义控制。
 
 \subsection{可控生成机制 (ControlNet)}
-虽然 LDM 具备强大的生成能力，但仅靠文本难以精确控制生成图像的几何结构。ControlNet \cite{zhang2023adding} 通过锁定预训练的大模型参数，并创建一个可训练的副本层，实现了额外的空间条件控制。
-在本文中，ControlNet 被用于增强文生图过程的结构约束，例如利用 Canny 边缘或 Depth 深度图作为条件，确保生成的参考图像具备合理的透视关系，从而提高后续参数解算的鲁棒性。
+虽然 LDM 具备强大的生成能力，但仅靠文本难以精确控制生成图像的几何结构（如边缘、姿态、深度）。ControlNet \cite{zhang2023adding} 通过一种独特的神经网络架构设计解决了这一问题。它锁定预训练的大模型参数，同时创建一个可训练的“副本层”，并通过“零卷积”（Zero Convolution）层将两个分支连接起来。
+
+在本文中，ControlNet 被用于增强文生图过程的结构约束。具体而言，系统利用 Canny 边缘检测算子或 Depth 深度估计算子提取参考图的几何特征，并将其作为额外条件输入 ControlNet。这确保了生成的二维参考图像不仅符合文本描述，还具备符合透视原理的几何结构，从而显著提高了后续参数逆向解算的鲁棒性。
 
 \section{三维渲染引擎与虚拟制片}
 
-Unreal Engine 5 (UE5) 是 Epic Games 开发的实时 3D 创作工具，其在虚拟制片（Virtual Production）领域有着广泛应用\cite{gregory2018game}。
+Unreal Engine 5 (UE5) 是 Epic Games 开发的实时 3D 创作工具，其在虚拟制片（Virtual Production）领域有着广泛应用 \cite{gregory2018game}。
 
 \subsection{UE5 坐标系统}
-与计算机视觉中常用的右手坐标系不同，UE5 采用左手坐标系（Left-handed Coordinate System）：
+在进行算法移植时，坐标系的不一致是主要的工程挑战。计算机视觉领域通常使用右手坐标系（Right-handed），而 UE5 采用左手坐标系（Left-handed）：
 \begin{itemize}
     \item \textbf{X轴}：前后方向（Forward），正方向向前。
     \item \textbf{Y轴}：左右方向（Right），正方向向右。
     \item \textbf{Z轴}：上下方向（Up），正方向向上。
 \end{itemize}
-在进行算法移植时，必须进行坐标系的转换与对齐。例如，从 OpenCV 的右手系 $(X_{cv}, Y_{cv}, Z_{cv})$ 转换到 UE5 的左手系 $(X_{ue}, Y_{ue}, Z_{ue})$ 通常需要执行轴翻转操作。
+
+因此，从算法模块输出的位姿矩阵 $T_{algo}$ 转换到 UE5 引擎使用的位姿 $T_{ue}$，需要经过如下的基底变换：
+\begin{equation}
+    T_{ue} = M_{coord} \cdot T_{algo} \cdot M_{coord}^{-1}
+\end{equation}
+其中 $M_{coord}$ 为坐标轴翻转矩阵（通常涉及 Y 轴的取反）。
 
 \subsection{CineCameraActor 组件}
-UE5 内置的 \texttt{CineCameraActor} 是模拟真实电影摄影机的核心组件。它支持调节焦距（Focal Length）、光圈（Aperture）、传感器尺寸（Sensor Width/Height）等物理参数。本文提出的算法最终将解算出的位姿数据映射为 \texttt{CineCameraActor} 的 \texttt{SetActorLocation} 和 \texttt{SetActorRotation} 接口调用，从而驱动虚拟摄像机运动。
+UE5 内置的 \texttt{CineCameraActor} 是模拟真实电影摄影机的核心组件。它不仅包含位置和旋转属性，还完整模拟了物理相机的光学特性，如焦距（Focal Length）、光圈（Current Aperture）、传感器尺寸（Filmback）等。
+本文提出的系统通过 Python 接口（Unreal Python API）与 \texttt{CineCameraActor} 进行交互，将解算出的参数实时映射到虚拟摄像机的属性上，从而驱动视口中的画面更新。
 
 \section{本章小结}
 本章系统介绍了针孔摄像机成像几何、潜在扩散模型原理以及 UE5 引擎架构。成像几何模型为从二维图像反推三维参数提供了理论依据；扩散模型与 ControlNet 为跨模态参考图像的生成提供了技术支撑；UE5 引擎则构成了算法验证的工程载体。这些理论与技术共同构成了本文研究的坚实基础。
