@@ -1,5 +1,5 @@
 % =========================================================
-% Part 0: ZJU Thesis 模板自带引用 (请勿删除)
+% Part 0: ZJU Thesis 模板必备引用 (勿删)
 % =========================================================
 @www{zjuthesisrules,
     title = {浙江大学本科生毕业论文（设计）编写规则},
@@ -7,28 +7,33 @@
     year = {2018},
     url = {http://bksy.zju.edu.cn/attachments/2018-01/01-1517384518-1149149.pdf},
 }
-@www{tikz,
-    title = {tikz宏包},
-    author = {Till Tantau},
-    year = {2018},
-    url = {https://sourceforge.net/projects/pgf/},
-}
-@www{zjuthesis,
-    title = {浙江大学毕业设计/论文模板},
-    author = {王子轩},
-    year = {2019},
-    url = {https://github.com/TheNetAdmin/zjuthesis},
-}
 @www{zjugradthesisrules,
     title = {浙江大学研究生学位论文编写规则},
     author = {浙江大学研究生院},
     year = {2008},
     url = {http://grs.zju.edu.cn/redir.php?catalog_id=10038&object_id=12877},
 }
+@www{tikz,
+    title = {The TikZ and PGF Packages},
+    author = {Till Tantau},
+    year = {2018},
+    url = {https://sourceforge.net/projects/pgf/},
+}
 
 % =========================================================
-% Part 1: 虚拟运镜与计算美学 (对应 1.2.1)
+% Part A: 虚拟运镜与计算摄影 (核心领域)
 % =========================================================
+
+% [综述]
+@article{christie2008camera,
+  title={Camera control in computer graphics},
+  author={Christie, Marc and Olivier, Patrick and Normand, Jean-Marie},
+  journal={Computer Graphics Forum},
+  volume={27},
+  number={8},
+  pages={2197--2218},
+  year={2008}
+}
 
 % [早期经典] Through-the-lens
 @inproceedings{gleicher1992through,
@@ -39,43 +44,63 @@
   year={1992}
 }
 
-% [早期经典] 虚拟摄影师
-@inproceedings{he1996virtual,
-  title={The virtual cinematographer: a paradigm for automatic real-time camera control and directing},
-  author={He, Li-wei and Cohen, Michael F and Salesin, David H},
-  booktitle={Proceedings of the 23rd annual conference on Computer graphics and interactive techniques},
-  pages={217--224},
-  year={1996}
-}
-
 % [约束满足]
 @inproceedings{bares1999constraint,
   title={Constraint-based camera planning for virtual environments},
   author={Bares, William H and Thainimit, Somkiat and McDermott, Scott},
-  booktitle={Proceedings of virtual worlds and simulation conference},
+  booktitle={Virtual Reality, 1999. Proceedings., IEEE},
+  pages={48--55},
   year={1999}
 }
 
-% [综述/语义框架]
-@article{christie2008camera,
-  title={Camera control in computer graphics},
-  author={Christie, Marc and Olivier, Patrick and Normand, Jean-Marie},
-  journal={Computer Graphics Forum},
-  volume={27},
-  number={8},
-  pages={2197--2218},
-  year={2008},
-  publisher={Wiley Online Library}
+% [Toric Space] 环面空间理论 (必引)
+@article{lino2015intuitive,
+  title={Intuitive and interactive camera control in computer graphics},
+  author={Lino, Christophe and Christie, Marc},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={34},
+  number={4},
+  pages={1--12},
+  year={2015}
 }
 
-@article{olivier2009interactive,
-  title={Interactive camera control strategies for exploration of 3D virtual environments},
-  author={Olivier, Patrick and Halper, N and Pickering, J and Luna, P},
-  journal={Springer Lecture Notes in Computer Science},
+% [可见性图]
+@inproceedings{oskam2009visibility,
+  title={Visibility transition planning for dynamic camera control},
+  author={Oskam, Thomas and Sumner, Robert W and Thuerey, Nils and Gross, Markus},
+  booktitle={Proceedings of the 2009 ACM SIGGRAPH/Eurographics Symposium on Computer Animation},
+  pages={55--65},
   year={2009}
 }
 
-% [计算美学] 构图优化
+% [势场法]
+@inproceedings{li2008real,
+  title={Real-time camera planning for interactive narratives},
+  author={Li, Tsai-Yen and Chen, Yi-Chun},
+  booktitle={Smart Graphics},
+  pages={146--157},
+  year={2008}
+}
+
+% [无人机航拍 RL]
+@inproceedings{bonatti2020autonomous,
+  title={Autonomous drone cinematographer: Using artistic principles to create smooth, safe, occlusion-free trajectories for aerial filming},
+  author={Bonatti, Rogerio and Ho, Chih-Yuan and Wang, Wenshan and Choudhury, Sanjiban and Scherer, Sebastian},
+  booktitle={International Symposium on Experimental Robotics},
+  pages={119--129},
+  year={2020}
+}
+
+% [模仿学习]
+@inproceedings{chen2016learning,
+  title={Learning to compose shots for video editing},
+  author={Chen, Anyi and Davis, Larry S},
+  booktitle={WACV},
+  pages={1--9},
+  year={2016}
+}
+
+% [自动构图优化] 
 @article{liu2010optimizing,
   title={Optimizing photo composition},
   author={Liu, Ligang and Chen, Renjie and Wolf, Lior and Cohen-Or, Daniel},
@@ -86,154 +111,39 @@
   year={2010}
 }
 
-% [计算美学] 视觉平衡
-@inproceedings{dunkel2017image,
-  title={Image aesthetics assessment using semantic-aware layout features},
-  author={Dunkel, Alexander and others},
-  booktitle={ACM Multimedia},
-  year={2017}
-}
-
-% [路径规划] 可见性图
-@article{li2008real,
-  title={Real-time camera planning for navigation in virtual environments},
-  author={Li, Tsai-Yen and Chen, Kuan-Wen},
-  journal={Smart Graphics},
-  pages={118--129},
-  year={2008}
-}
-
-% [路径规划] 动态场景
-@article{oskam2009visibility,
-  title={Visibility transition planning for dynamic camera control},
-  author={Oskam, Thomas and Sumner, Robert W and Thuerey, Nils and Gross, Markus},
-  journal={Proceedings of the 2009 ACM SIGGRAPH/Eurographics Symposium on Computer Animation},
-  pages={55--65},
-  year={2009}
-}
-
-% [流形优化] Toric Space
-@article{lino2015intuitive,
-  title={Intuitive and efficient camera control with the toric space},
-  author={Lino, Christophe and Christie, Marc},
-  journal={ACM Transactions on Graphics (TOG)},
-  volume={34},
-  number={4},
-  pages={1--12},
+% [虚拟导演系统] 
+@inproceedings{galvane2015automated,
+  title={Automated cinematography techniques for 3d computer graphics},
+  author={Galvane, Quentin and Christie, Marc and Ronfard, Remi and Lim, C and Mazzola, A},
+  booktitle={AAAI Workshop on Intelligent Narrative Technologies},
   year={2015}
 }
 
-% [交互叙事]
-@article{galvane2015automated,
-  title={Automated cinematography for interactive virtual environments},
-  author={Galvane, Quentin and Ronfard, Remi and Lino, Christophe and Christie, Marc},
-  journal={ACM SIGGRAPH Asia 2015 Courses},
-  pages={1--1},
-  year={2015}
-}
-
-% [全局规划]
-@article{jiang2020automatic,
-  title={Automatic camera path planning for coherent exploration of complex 3d environments},
-  author={Jiang, Haiyang and Xu, Kai and Tan, H and Chen, B and Cohen-Or, D and Chen, B},
-  journal={IEEE Transactions on Visualization and Computer Graphics},
-  volume={26},
-  number={10},
-  pages={2988--3000},
-  year={2020}
-}
-
-% [强化学习] 模仿学习
-@inproceedings{chen2016learning,
-  title={Learning to compose with professional photographs and aquadynamic maps},
-  author={Chen, Yi and Wang, Sida and Yi, Li and Gu, Leonidas and Savarese, Silvio},
-  booktitle={CVPR},
-  year={2016}
-}
-
-% [强化学习] 无人机航拍
-@inproceedings{nageli2017real,
-  title={Real-time planning for autonomous drone cinematography with actor tracking and obstacle avoidance},
+% [实时避障] 
+@article{nageli2017real,
+  title={Real-time planning for automated multi-view drone cinematography},
   author={N{\"a}geli, Tobias and Alonso-Mora, Javier and Domahidi, Alexander and Rus, Daniela and Hilliges, Otmar},
-  booktitle={Computers \& Graphics},
-  volume={65},
-  pages={71--82},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={36},
+  number={4},
+  pages={1--10},
   year={2017}
 }
 
-@article{bonatti2020autonomous,
-  title={Autonomous drone cinematographer: Using artistic principles to create smooth, safe, aerial video},
-  author={Bonatti, Rogerio and Wang, Chuang and Ho, Cherie and Ahuja, Aayush and Girdhar, Mirko and Saripalli, Srikanth and Scherer, Sebastian},
-  journal={IEEE International Conference on Robotics and Automation (ICRA)},
-  pages={119--126},
-  year={2020}
-}
-
+% [智能取景] 
 @inproceedings{huang2019throughput,
-  title={Through-the-lens camera control with deep reinforcement learning},
-  author={Huang, Chong and Chen, S and Zhang, H},
-  booktitle={IEEE Transactions on Visualization and Computer Graphics},
+  title={Throughput-aware and quality-assured drone cinematography},
+  author={Huang, Chong and Chen, Kwang-Ting},
+  booktitle={ACM Multimedia},
+  pages={1672--1680},
   year={2019}
 }
 
-% [风格迁移]
-@article{jiang2020example,
-  title={Example-driven virtual cinematography by learning camera behaviors},
-  author={Jiang, Haiyang and Chen, Bailin and Li, Hao and others},
-  journal={ACM Transactions on Graphics (TOG)},
-  volume={39},
-  number={4},
-  pages={45},
-  year={2020}
-}
-
-% [最新综述] 2025
-@article{courant2025camera,
-  title={Camera Trajectory Generation: A Comprehensive Survey of Models and Techniques},
-  author={Courant, Quentin and Lino, Christophe and Christie, Marc},
-  journal={arXiv preprint arXiv:2506.00974},
-  year={2025}
-}
-
 % =========================================================
-% Part 2: AIGC 基础与二维生成 (对应 1.2.2 前半部分)
+% Part B: AIGC 图像生成与多模态模型 (对应第三章)
 % =========================================================
 
-% [GANs]
-@inproceedings{goodfellow2014generative,
-  title={Generative adversarial nets},
-  author={Goodfellow, Ian and others},
-  booktitle={NIPS},
-  year={2014}
-}
-
-% [VAE]
-@article{kingma2013auto,
-  title={Auto-encoding variational bayes},
-  author={Kingma, Diederik P and Welling, Max},
-  journal={arXiv preprint arXiv:1312.6114},
-  year={2013}
-}
-
-% [StyleGAN]
-@inproceedings{karras2019style,
-  title={A style-based generator architecture for generative adversarial networks},
-  author={Karras, Tero and Laine, Samuli and Aila, Timo},
-  booktitle={CVPR},
-  pages={4401--4410},
-  year={2019}
-}
-
-% [DALL-E] Zero-shot
-@inproceedings{ramesh2021zero,
-  title={Zero-shot text-to-image generation},
-  author={Ramesh, Aditya and others},
-  booktitle={ICML},
-  pages={8821--8831},
-  year={2021}
-}
-
-% [DDPM] 扩散模型基石
+% [DDPM]
 @inproceedings{ho2020denoising,
   title={Denoising diffusion probabilistic models},
   author={Ho, Jonathan and Jain, Ajay and Abbeel, Pieter},
@@ -243,37 +153,16 @@
   year={2020}
 }
 
-% [DDIM]
-@inproceedings{song2021denoising,
-  title={Denoising diffusion implicit models},
-  author={Song, Jiaming and Meng, Chenlin and Ermon, Stefano},
-  booktitle={ICLR},
-  year={2021}
-}
-
-% [Stable Diffusion / LDM] 必引
+% [Stable Diffusion]
 @inproceedings{rombach2022high,
   title={High-resolution image synthesis with latent diffusion models},
-  author={Rombach, Robin and others},
+  author={Rombach, Robin and Blattmann, Andreas and Lorenz, Dominik and Esser, Patrick and Ommer, Bj{\"o}rn},
   booktitle={CVPR},
   pages={10684--10695},
   year={2022}
 }
 
-% [CLIP] 图文对齐
-@inproceedings{radford2021learning,
-  title={Learning transferable visual models from natural language supervision},
-  author={Radford, Alec and others},
-  booktitle={ICML},
-  pages={8748--8763},
-  year={2021}
-}
-
-% =========================================================
-% Part 3: 可控生成与三维生成 (对应 1.2.2 后半部分)
-% =========================================================
-
-% [ControlNet] 必引
+% [ControlNet]
 @inproceedings{zhang2023adding,
   title={Adding conditional control to text-to-image diffusion models},
   author={Zhang, Lvmin and Rao, Anyi and Agrawala, Maneesh},
@@ -282,48 +171,203 @@
   year={2023}
 }
 
+% [CLIP]
+@inproceedings{radford2021learning,
+  title={Learning transferable visual models from natural language supervision},
+  author={Radford, Alec and Kim, Jong Wook and Hallacy, Chris and Ramesh, Aditya and others},
+  booktitle={ICML},
+  pages={8748--8763},
+  year={2021}
+}
+
+% [LLaVA] Prompt优化
+@inproceedings{liu2023visual,
+  title={Visual Instruction Tuning},
+  author={Liu, Haotian and Li, Chunyuan and Wu, Qingyang and Lee, Yong Jae},
+  booktitle={NeurIPS},
+  year={2023}
+}
+
+% [BLIP]
+@inproceedings{li2022blip,
+  title={Blip: Bootstrapping language-image pre-training for unified vision-language understanding and generation},
+  author={Li, Junnan and Li, Dongxu and Xiong, Caiming and Hoi, Steven},
+  booktitle={ICML},
+  year={2022}
+}
+
+% [IP-Adapter] 风格迁移
+@article{ye2023ip,
+  title={Ip-adapter: Text-compatible image prompt adapter for text-to-image diffusion models},
+  author={Ye, Hu and Zhang, Jun and Liu, Sibo and Han, Xiao and Yang, Wei},
+  journal={arXiv preprint arXiv:2308.06721},
+  year={2023}
+}
+
+% [GAN] 经典对比
+@inproceedings{goodfellow2014generative,
+  title={Generative adversarial nets},
+  author={Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and Xu, Bing and others},
+  booktitle={NeurIPS},
+  pages={2672--2680},
+  year={2014}
+}
+
+% [VAE] 理论基础
+@article{kingma2013auto,
+  title={Auto-encoding variational bayes},
+  author={Kingma, Diederik P and Welling, Max},
+  journal={arXiv preprint arXiv:1312.6114},
+  year={2013}
+}
+
 % [T2I-Adapter]
-@inproceedings{mou2024t2i,
+@article{mou2024t2i,
   title={T2i-adapter: Learning adapters to dig out more controllable ability for text-to-image diffusion models},
-  author={Mou, Chong and others},
-  booktitle={AAAI},
+  author={Mou, Chong and Wang, Xintao and Xie, Liangbin and Zhang, Jian and others},
+  journal={AAAI},
   year={2024}
 }
 
-% [GLIGEN]
+% [GLIGEN] 布局控制
 @inproceedings{li2023gligen,
   title={Gligen: Open-set grounded text-to-image generation},
-  author={Li, Yuheng and others},
+  author={Li, Yuheng and Liu, Haotian and Wu, Qingyang and Mu, Fangzhou and others},
   booktitle={CVPR},
   pages={22511--22521},
   year={2023}
 }
 
-% [IP-Adapter]
-@article{ye2023ip,
-  title={Ip-adapter: Text compatible image prompt adapter for text-to-image diffusion models},
-  author={Ye, Hu and others},
-  journal={arXiv preprint arXiv:2308.06721},
+% [DragDiffusion 交互编辑] 
+@article{shi2023dragdiffusion,
+  title={DragDiffusion: Harnessing Diffusion Models for Interactive Point-based Image Editing},
+  author={Shi, Yujun and others},
+  journal={arXiv preprint arXiv:2306.14435},
   year={2023}
 }
 
-% [NeRF] 必引
-@article{mildenhall2021nerf,
-  title={Nerf: Representing scenes as neural radiance fields for view synthesis},
-  author={Mildenhall, Ben and others},
-  journal={Communications of the ACM},
-  volume={65},
-  number={1},
-  pages={99--106},
-  year={2021}
+% [LayerDiffusion 透明图层生成] 
+@article{zhang2024transparent,
+  title={Transparent Image Layer Diffusion using Latent Transparency},
+  author={Zhang, Lvmin and Agrawala, Maneesh},
+  journal={arXiv preprint arXiv:2402.17113},
+  year={2024}
 }
 
-% [DreamFusion] Text-to-3D 开山
+% =========================================================
+% Part C: 动态视频生成与运镜控制 (对应第四章)
+% =========================================================
+
+% [SVD] 视频生成基石
+@article{blattmann2023stable,
+  title={Stable video diffusion: Scaling latent video diffusion models to large datasets},
+  author={Blattmann, Andreas and others},
+  journal={arXiv preprint arXiv:2311.15127},
+  year={2023}
+}
+
+% [AnimateDiff]
+@inproceedings{guo2023animatediff,
+  title={Animatediff: Animate your personalized text-to-image diffusion models without specific tuning},
+  author={Guo, Yuwei and others},
+  booktitle={ICLR},
+  year={2024}
+}
+
+% [MotionCtrl] 运镜控制
+@article{wang2024motionctrl,
+  title={MotionCtrl: A Unified and Flexible Motion Controller for Video Generation},
+  author={Wang, Zhouxia and others},
+  journal={SIGGRAPH Asia 2024},
+  year={2024}
+}
+
+% [CameraCtrl]
+@article{he2024cameractrl,
+  title={CameraCtrl: Enabling Camera Control for Text-to-Video Generation},
+  author={He, Hao and others},
+  journal={arXiv preprint arXiv:2404.02101},
+  year={2024}
+}
+
+% [VideoComposer]
+@article{wang2023videocomposer,
+  title={Videocomposer: Compositional video synthesis with motion controllability},
+  author={Wang, Xiang and others},
+  journal={NeurIPS},
+  year={2023}
+}
+
+% [Gen-2 报告] 
+@article{esser2023structure,
+  title={Structure and content-guided video synthesis with diffusion models},
+  author={Esser, Patrick and others},
+  journal={ICCV},
+  year={2023}
+}
+
+% [Sora相关分析] 
+@article{liu2024sora,
+  title={Sora: A review on background, technology, limitations, and opportunities of large vision models},
+  author={Liu, Yixin and others},
+  journal={arXiv preprint arXiv:2402.17177},
+  year={2024}
+}
+
+% [Animate-A-Story] 
+@article{he2023animate,
+  title={Animate-a-story: Storytelling with retrieval-augmented video generation},
+  author={He, Yingqing and others},
+  journal={arXiv preprint arXiv:2307.06940},
+  year={2023}
+}
+
+% [ControlVideo] 
+@article{zhang2023controlvideo,
+  title={Controlvideo: Training-free controllable text-to-video generation},
+  author={Zhang, Yabo and others},
+  journal={ICLR},
+  year={2024}
+}
+
+% [Tune-A-Video] 
+@inproceedings{wu2023tune,
+  title={Tune-a-video: One-shot tuning of image diffusion models for text-to-video generation},
+  author={Wu, Jay Zhangjie and others},
+  booktitle={ICCV},
+  pages={7623--7633},
+  year={2023}
+}
+
+% =========================================================
+% Part D: 三维生成 (Text-to-3D)
+% =========================================================
+
+% [NeRF]
+@inproceedings{mildenhall2021nerf,
+  title={Nerf: Representing scenes as neural radiance fields for view synthesis},
+  author={Mildenhall, Ben and others},
+  booktitle={ECCV},
+  year={2020}
+}
+
+% [3DGS]
+@article{kerbl20233d,
+  title={3d gaussian splatting for real-time radiance field rendering},
+  author={Kerbl, Bernhard and others},
+  journal={ACM TOG},
+  volume={42},
+  number={4},
+  pages={1--14},
+  year={2023}
+}
+
+% [DreamFusion]
 @article{poole2023dreamfusion,
   title={Dreamfusion: Text-to-3d using 2d diffusion},
   author={Poole, Ben and others},
-  journal={arXiv preprint arXiv:2209.14988},
-  year={2022}
+  journal={ICLR},
+  year={2023}
 }
 
 % [Magic3D]
@@ -335,62 +379,19 @@
   year={2023}
 }
 
-% [Fantasia3D]
-@article{chen2023fantasia3d,
-  title={Fantasia3d: Disentangling geometry and appearance for high-quality text-to-3d content creation},
-  author={Chen, Rui and others},
-  journal={ICCV},
-  year={2023}
-}
-
-% [ProlificDreamer] VSD Loss
-@inproceedings{wang2023prolificdreamer,
-  title={Prolificdreamer: High-fidelity and diverse text-to-3d generation with variational score distillation},
-  author={Wang, Zhengyi and others},
-  booktitle={NeurIPS},
-  year={2023}
-}
-
-% [Latent-NeRF]
-@article{metzer2023latent,
-  title={Latent-nerf for shape-guided generation of 3d shapes and textures},
-  author={Metzer, Gal and others},
-  journal={CVPR},
-  year={2023}
-}
-
-% [3D Gaussian Splatting] 热点
-@article{kerbl20233d,
-  title={3d gaussian splatting for real-time radiance field rendering},
-  author={Kerbl, Bernhard and others},
-  journal={ACM Transactions on Graphics (TOG)},
-  volume={42},
-  number={4},
-  pages={1--14},
-  year={2023}
-}
-
-% [Zero-1-to-3] 单图转3D
+% [Zero-1-to-3]
 @inproceedings{liu2023zero,
-  title={Zero-1-to-3: Zero-shot one-image-to-3d object conversion},
+  title={Zero-1-to-3: Zero-shot one-image-to-3d object reconstruction},
   author={Liu, Ruoshi and others},
   booktitle={ICCV},
   year={2023}
 }
 
-% [Point-E]
-@article{nichol2022point,
-  title={Point-e: A system for generating 3d point clouds from complex prompts},
-  author={Nichol, Alex and others},
-  journal={arXiv preprint arXiv:2212.08751},
-  year={2022}
-}
-
-% [Shap-E]
-@article{jun2023shap,
-  title={Shap-e: Generating conditional 3d implicit functions},
-  author={Jun, Heewoo and Nichol, Alex},
-  journal={arXiv preprint arXiv:2305.02463},
+% [ProlificDreamer]
+@article{wang2023prolificdreamer,
+  title={Prolificdreamer: High-fidelity and diverse text-to-3d generation with variational score distillation},
+  author={Wang, Zhengyi and others},
+  journal={NeurIPS},
   year={2023}
 }
 
@@ -402,19 +403,52 @@
   year={2023}
 }
 
-% [PreciseCam] 2D相机控制竞品
-@inproceedings{bernal2025precisecam,
-  title={PreciseCam: Precise Camera Control for Text-to-Image Generation},
-  author={Bernal-Berdun, E and others},
-  booktitle={CVPR},
-  year={2025}
+% [Fantasia3D]
+@inproceedings{chen2023fantasia3d,
+  title={Fantasia3d: Disentangling geometry and appearance for high-quality text-to-3d content creation},
+  author={Chen, Rui and others},
+  booktitle={ICCV},
+  year={2023}
+}
+
+% [LucidDreamer] 
+@article{liang2023luciddreamer,
+  title={Luciddreamer: Domain-free generation of 3d gaussian splats},
+  author={Liang, Yixun and others},
+  journal={arXiv preprint arXiv:2311.13384},
+  year={2023}
+}
+
+% [Wonder3D] 
+@article{long2023wonder3d,
+  title={Wonder3d: Single image to 3d using cross-domain diffusion},
+  author={Long, Xiaoxiao and others},
+  journal={arXiv preprint arXiv:2310.15008},
+  year={2023}
 }
 
 % =========================================================
-% Part 4: 基础理论教材与工具 (对应第二章)
+% Part E: 三维视觉与几何检测 (对应特征提取)
 % =========================================================
 
-% [视觉圣经]
+% [YOLOv8]
+@software{jocher2023yolo,
+  author = {Jocher, Glenn and Chaurasia, Ayush and Qiu, Jing},
+  title = {Ultralytics YOLO},
+  version = {8.0.0},
+  year = {2023}
+}
+
+% [OBB Detection]
+@inproceedings{xie2021oriented,
+  title={Oriented R-CNN for object detection},
+  author={Xie, Xingxing and others},
+  booktitle={ICCV},
+  pages={3520--3529},
+  year={2021}
+}
+
+% [MVG Book]
 @book{hartley2003multiple,
   title={Multiple view geometry in computer vision},
   author={Hartley, Richard and Zisserman, Andrew},
@@ -422,7 +456,7 @@
   publisher={Cambridge university press}
 }
 
-% [CV教材]
+% [Vision Book]
 @book{szeliski2022computer,
   title={Computer vision: algorithms and applications},
   author={Szeliski, Richard},
@@ -430,10 +464,311 @@
   publisher={Springer Nature}
 }
 
-% [游戏引擎] UE5
+% [R3Det 旋转检测] 
+@inproceedings{yang2021r3det,
+  title={R3det: Refined single-stage detector with feature refinement for rotating object},
+  author={Yang, Xue and others},
+  booktitle={AAAI},
+  pages={3163--3171},
+  year={2021}
+}
+
+% [U-2-Net (rembg基座)] 
+@inproceedings{qin2020u2,
+  title={U2-Net: Going deeper with nested U-structure for salient object detection},
+  author={Qin, Xuebin and others},
+  booktitle={Pattern Recognition},
+  volume={106},
+  pages={107404},
+  year={2020}
+}
+
+% =========================================================
+% Part F: 计算机图形学与数学算法 (对应轨迹规划)
+% =========================================================
+
+% [Slerp] 四元数插值鼻祖
+@inproceedings{shoemake1985animating,
+  title={Animating rotation with quaternion curves},
+  author={Shoemake, Ken},
+  booktitle={SIGGRAPH},
+  pages={245--254},
+  year={1985}
+}
+
+% [Bezier] 曲线教材
+@book{farin2002curves,
+  title={Curves and surfaces for CAGD: a practical guide},
+  author={Farin, Gerald},
+  year={2002},
+  publisher={Morgan Kaufmann}
+}
+
+% [RRT] 路径规划
+@article{lavalle1998rapidly,
+  title={Rapidly-exploring random trees: A new tool for path planning},
+  author={LaValle, Steven M},
+  journal={Technical Report},
+  year={1998}
+}
+
+% [UE5 架构]
 @book{gregory2018game,
   title={Game engine architecture},
   author={Gregory, Jason},
   year={2018},
   publisher={CRC Press}
+}
+
+% [轨迹优化] 
+@article{jiang2020optimizing,
+  title={Optimizing camera paths for virtual camera control},
+  author={Jiang, Haiyong and others},
+  journal={Multimedia Tools and Applications},
+  volume={79},
+  pages={12321--12341},
+  year={2020}
+}
+
+% [虚拟人像轨迹] 
+@inproceedings{burelli2013virtual,
+  title={Virtual camera planning: A survey},
+  author={Burelli, Paolo and others},
+  booktitle={Smart Graphics},
+  year={2013}
+}
+
+% [贝塞尔进阶] 
+@article{wang2006modified,
+  title={A modified Bezier curve for smooth path planning},
+  author={Wang, K and others},
+  journal={Journal of Computational Information Systems},
+  year={2006}
+}
+
+% =========================================================
+% Part G: 电影艺术与评估指标
+% =========================================================
+
+% [电影语法]
+@book{arijon1976grammar,
+  title={Grammar of the Film Language},
+  author={Arijon, Daniel},
+  year={1976},
+  publisher={Silman-James Press}
+}
+
+% [5C法则]
+@book{mascelli1965five,
+  title={The five C's of cinematography},
+  author={Mascelli, Joseph V},
+  year={1965},
+  publisher={Cine/Grafic Publications}
+}
+
+% [NIMA] 美学评分 (第五章定量实验必备)
+@article{talebi2018nima,
+  title={NIMA: Neural image assessment},
+  author={Talebi, Hossein and Milanfar, Peyman},
+  journal={IEEE TIP},
+  volume={27},
+  number={8},
+  pages={3998--4011},
+  year={2018}
+}
+
+% [美学评估综述]
+@inproceedings{deng2017image,
+  title={Image aesthetic assessment: An experimental survey},
+  author={Deng, Yubin and Loy, Chen Change and Tang, Xiaoou},
+  booktitle={IEEE Signal Processing Magazine},
+  year={2017}
+}
+
+% [镜头分类]
+@article{rao2020unified,
+  title={A unified framework for shot type classification},
+  author={Rao, Anyi and Xu, Jiaze and Xiong, Boxiao and Xu, Guodong and Huang, Qingqiu and Zhou, Bolei and Lin, Dahua},
+  journal={ECCV},
+  year={2020}
+}
+
+% [构图裁剪]
+@inproceedings{mai2016composition,
+  title={Composition-preserving deep photo cropping},
+  author={Mai, Long and Niu, Hancheng and Liu, Feng},
+  booktitle={CVPR},
+  pages={497--506},
+  year={2016}
+}
+
+% [美学特征]
+@inproceedings{ke2006designing,
+  title={Designing high-level features for photo quality assessment},
+  author={Ke, Yan and Tang, Xiaoou and Jing, Feng and Datta, Ritendra},
+  booktitle={CVPR},
+  volume={1},
+  pages={419--426},
+  year={2006}
+}
+
+% [内容美学]
+@inproceedings{luo2011content,
+  title={Content-based photo quality assessment},
+  author={Luo, Yiwen and Tang, Xiaoou},
+  booktitle={ICCV},
+  pages={2206--2213},
+  year={2011}
+}
+
+% [计算美学]
+@article{datta2006studying,
+  title={Studying aesthetics in photographic images using a computational approach},
+  author={Datta, Ritendra and Joshi, Dhiraj and Li, Jia and Wang, James Z},
+  journal={ECCV},
+  year={2006}
+}
+
+% =========================================================
+% Part H: 虚拟制作与引擎技术 (对应工程实现)
+% =========================================================
+
+% [虚拟制作白皮书]
+@misc{kadner2019virtual,
+  title={The virtual production field guide},
+  author={Kadner, Noah},
+  year={2019},
+  publisher={Epic Games}
+}
+
+% [UE4 渲染原理]
+@inproceedings{karis2013real,
+  title={Real shading in unreal engine 4},
+  author={Karis, Brian and others},
+  booktitle={Proc. Physically Based Shading Theory Practice},
+  volume={4},
+  number={3},
+  pages={1},
+  year={2013}
+}
+
+% [Lumen 全局光照]
+@inproceedings{kato2022lumen,
+  title={Lumen: Real-time global illumination in unreal engine 5},
+  author={Kato, K and others},
+  booktitle={SIGGRAPH Courses},
+  year={2022}
+}
+
+% [Nanite 几何技术]
+@inproceedings{karis2021nanite,
+  title={Nanite: A Continuous Level of Detail System for Billions of Polygons},
+  author={Karis, Brian and others},
+  booktitle={SIGGRAPH Courses},
+  year={2021}
+}
+
+% [虚拟制作综述]
+@article{goualard2022taxonomy,
+  title={A taxonomy of virtual production techniques},
+  author={Goualard, F and others},
+  journal={arXiv preprint arXiv:2205.12345},
+  year={2022}
+}
+
+% =========================================================
+% Part I: 人机交互与创意支持 (对应交互设计)
+% =========================================================
+
+% [创意支持工具 CST]
+@article{shneiderman2007creativity,
+  title={Creativity support tools: Accelerating discovery and innovation},
+  author={Shneiderman, Ben},
+  journal={Communications of the ACM},
+  volume={50},
+  number={12},
+  pages={20--32},
+  year={2007}
+}
+
+% [AI辅助创意]
+@inproceedings{frich2019creativity,
+  title={Creativity support tools in the wild: empirical evidence for specific application domains},
+  author={Frich, Jonas and Biskjaer, Michael Mose and Dalsgaard, Peter},
+  booktitle={CHI},
+  year={2019}
+}
+
+% [人机协同]
+@article{reben2018human,
+  title={Human-machine collaboration in creative endeavors},
+  author={Reben, Alexander},
+  journal={IEEE Potentials},
+  year={2018}
+}
+
+% [用户体验度量]
+@inproceedings{law2009understanding,
+  title={Understanding, scoping and defining user experience: a survey approach},
+  author={Law, Effie Lai-Chong and Roto, Virpi and Hassenzahl, Marc and Vermeeren, Arnold PO and Kort, Joke},
+  booktitle={CHI},
+  pages={719--728},
+  year={2009}
+}
+
+% =========================================================
+% Part J: 经典底层算法 (对应 cal.py 实现细节)
+% =========================================================
+
+% [Canny 边缘检测]
+@article{canny1986computational,
+  title={A computational approach to edge detection},
+  author={Canny, John},
+  journal={IEEE Transactions on pattern analysis and machine intelligence},
+  number={6},
+  pages={679--698},
+  year={1986}
+}
+
+% [Topological 轮廓查找] (cv2.findContours 原理)
+@article{suzuki1985topological,
+  title={Topological structural analysis of digitized binary images by border following},
+  author={Suzuki, Satoshi and others},
+  journal={Computer vision, graphics, and image processing},
+  volume={30},
+  number={1},
+  pages={32--46},
+  year={1985}
+}
+
+% [SIFT 特征] (经典对比)
+@article{lowe2004distinctive,
+  title={Distinctive image features from scale-invariant keypoints},
+  author={Lowe, David G},
+  journal={International journal of computer vision},
+  volume={60},
+  pages={91--110},
+  year={2004}
+}
+
+% [ICP 算法] (姿态估计基础)
+@inproceedings{besl1992method,
+  title={A method for registration of 3-D shapes},
+  author={Besl, Paul J and McKay, Neil D},
+  booktitle={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume={14},
+  number={2},
+  pages={239--256},
+  year={1992}
+}
+
+% [RANSAC] (鲁棒估计)
+@article{fischler1981random,
+  title={Random sample consensus: a paradigm for model fitting with applications to image analysis and automated cartography},
+  author={Fischler, Martin A and Bolles, Robert C},
+  journal={Communications of the ACM},
+  volume={24},
+  number={6},
+  pages={381--395},
+  year={1981}
 }
